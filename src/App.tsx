@@ -20,6 +20,13 @@ function App() {
     setTasks(newTasks)
   }
 
+  function changeCheck(taskId:string, isDone:boolean){
+    let taskTrue = tasks.find(t=>t.id === taskId)
+    if (taskTrue){
+      taskTrue.isDone = isDone
+    }
+    setTasks([...tasks])
+  }
   let [filter,setFilter]=useState("all");
 
   function removeTask(id:string){    
@@ -32,10 +39,10 @@ function App() {
   }
 
   let tasksForTodoList = tasks;
-  if (filter==="completed"){
+  if (filter==="active"){
     tasksForTodoList = tasks.filter(t=>t.isDone === false)
   }
-  if (filter==="active"){
+  if (filter==="completed"){
     tasksForTodoList = tasks.filter(t=>t.isDone === true)
   }
   return (
@@ -44,7 +51,9 @@ function App() {
                 tasks={tasksForTodoList} 
                 removeTask={removeTask}
                 changeFilter={changeFilter}
-                addTask={addTask}/>
+                addTask={addTask}
+                changeCheck={changeCheck}
+                filter = {filter}/>
                 
       
       
