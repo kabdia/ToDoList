@@ -1,5 +1,7 @@
+import { Button } from '@mui/material';
 import React, { ChangeEvent,  KeyboardEvent,  useState } from 'react';
-
+import { TextField } from '@mui/material';
+import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 
 type AddItemFormType ={
     addItem:(title:string)=>void
@@ -29,11 +31,17 @@ type AddItemFormType ={
       
     }
         return <div>
-            <input value={newTaskTitle} 
+            <TextField value={newTaskTitle} 
+                      variant={'outlined'}
+                      label={'Что нужно выполнить'}
                    onChange={onNewTitleChangeHandler}
                    onKeyPress={onKeyPressHandler}
-                   className={error ? 'error':''}/>
-            <button onClick={addTask}>Добавить</button>
+                   className={error ? 'error':''}
+                   error={!!error}/>
+                   
+            <Button variant={'outlined'} color={'primary'} onClick={addTask}>
+              <PlaylistAddCircleIcon/>
+              </Button>
             { error && <div className='error-message'>Поле не должно быть пустым</div>}
           </div>
   }

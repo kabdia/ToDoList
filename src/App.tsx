@@ -3,6 +3,14 @@ import './App.css';
 import TodoList, { TaskType } from './TodoList';
 import { v1 } from 'uuid';
 import AddItemFrom from './AddIremFrom';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Container from '@mui/material/Container/Container';
+import Grid from '@mui/material/Grid/Grid';
+import Paper from '@mui/material/Paper/Paper';
 export type FilterValuesType = 'all'|'completed'|'active';
 
 type TodoListType = {
@@ -103,8 +111,28 @@ function App() {
   }
   return (
     <div className="container">
-      <AddItemFrom addItem={addTodoList} />
-     { todolists.map((t1)=>{
+      
+      <AppBar position="static">
+     <Toolbar>
+       <IconButton
+         size="large"
+         edge="start"
+         color="inherit"
+         aria-label="menu"
+         sx={{ mr: 2 }}>        
+       </IconButton>
+       <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+         News
+       </Typography>
+       <Button color="inherit">Login</Button>
+     </Toolbar>
+    </AppBar>
+    <Container fixed>
+      <Grid container style={{padding:'10px'}}>
+        <AddItemFrom addItem={addTodoList} />
+      </Grid>
+      <Grid spacing={10} container>
+       { todolists.map((t1)=>{
 
       let tasksForTodoList = tasks[t1.id]
 
@@ -114,7 +142,9 @@ function App() {
       if (t1.filter==="completed"){
         tasksForTodoList = tasksForTodoList.filter(t=>t.isDone === true)
       }
-     return <TodoList 
+     return <Grid item>
+            <Paper style={{padding:'10px'}}>
+            <TodoList 
                 key={t1.id}
                 id = {t1.id}
                 title={t1.title}
@@ -126,8 +156,14 @@ function App() {
                 changeTaskTitle={changeTaskTitle}
                 changeTodoListTitle={changeTodoListTitle}
                 removeTodo={removeTodo}
-                filter = {t1.filter}/>}
-    )}      
+                filter = {t1.filter}/>
+            </Paper>
+            </Grid>
+        }
+      )} 
+     
+      </Grid>
+    </Container>     
     </div>
   );
 }
